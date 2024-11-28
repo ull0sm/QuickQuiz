@@ -1,38 +1,63 @@
-import java.util.Scanner;
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-class QuestionBank {
+public class QuestionBank {
     static DataBase objdb = new DataBase();
     static Scanner sc = new Scanner(System.in);
-    private int score = 0;
-    private int questionIndex = 0;
+    static int score = 0;
 
-    private final String[] questions = {
+    private int questionIndex = 0;
+    private JFrame frame;
+    private JLabel questionLabel;
+    private JButton[] optionButtons;
+    private String[] questions;
+    private int[] answers;
+
+    public int DSAQB() {
+        questions = new String[] {
             "1. What is the time complexity of binary search?\n1. O(n)  2. O(log n)\n3. O(n^2)  4. O(1)",
             "2. Which data structure is used in Depth First Search (DFS)?\n1. Queue  2. Stack\n3. Array  4. Linked List",
             "3. What is the worst-case time complexity of QuickSort?\n1. O(n log n)  2. O(log n)\n3. O(n^2)  4. O(n)",
             "4. What does the acronym SQL stand for?\n1. Structured Query Language  2. Simple Query Language\n3. System Query Language  4. Synchronized Query Language",
             "5. Which sorting algorithm has the best average-case time complexity?\n1. Bubble Sort  2. Insertion Sort\n3. Merge Sort  4. Selection Sort"
-    };
-
-    private final int[] answers = {2, 2, 3, 1, 3}; // Correct answers for each question
-    private JFrame frame;
-    private JLabel questionLabel;
-    private JButton[] optionButtons;
-
-    public int DSAQB() {
-        initializeFrame();
-        return score; // Final score returned when the quiz ends
+        };
+        answers = new int[] {2, 2, 3, 1, 3};
+        initializeFrame("Data Structures and Algorithms Quiz");
+        return score;
     }
 
-    private void initializeFrame() {
-        frame = new JFrame("Quiz Application");
+    public int JAVAQB() {
+        questions = new String[] {
+            "1. Which method is used to start a thread in Java?\n1. run()  2. start()\n3. init()  4. execute()",
+            "2. Which keyword is used to inherit a class?\n1. implements  2. extends\n3. super  4. this",
+            "3. What is the size of an int in Java?\n1. 2 bytes  2. 4 bytes\n3. 8 bytes  4. Depends on OS",
+            "4. Which of these is not a Java feature?\n1. Object-Oriented  2. Platform-Independent\n3. Secure  4. Pointer-Based",
+            "5. What is the default value of a boolean variable?\n1. true  2. false\n3. 0  4. null"
+        };
+        answers = new int[] {2, 2, 2, 4, 2};
+        initializeFrame("Java Quiz");
+        return score;
+    }
+
+    public int OSQB() {
+        questions = new String[] {
+            "1. Which of the following is a non-preemptive scheduling algorithm?\n1. SJF  2. RR\n3. FCFS  4. Priority",
+            "2. What is a deadlock?\n1. Infinite Loop  2. Resource Wait\n3. Circular Wait  4. Thrashing",
+            "3. Which scheduling algorithm is used by most OS?\n1. FCFS  2. Priority\n3. RR  4. SJF",
+            "4. What is virtual memory?\n1. Memory on disk  2. RAM Extension\n3. None of these  4. OS Feature",
+            "5. Which of the following is not an OS?\n1. Windows  2. Linux\n3. Oracle  4. MacOS"
+        };
+        answers = new int[] {3, 3, 3, 2, 3};
+        initializeFrame("Operating Systems Quiz");
+        return score;
+    }
+
+    private void initializeFrame(String quizTitle) {
+        frame = new JFrame(quizTitle);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(500, 300);
         frame.setLayout(new BorderLayout());
@@ -74,93 +99,4 @@ class QuestionBank {
             frame.dispose();
         }
     }
-
-    public static void JAVAQB() {
-        System.out.println("Choose the correct answer:");
-        System.out.println("1. Which method is used to start a thread in Java?");
-        System.out.println("1. run()\t2. start()\n3. init()\t4. execute()");
-        int choice = sc.nextInt();
-
-        if(choice ==2){
-            score ++;
-        }
-        
-        System.out.println("2. Which keyword is used to inherit a class?");
-        System.out.println("1. implements\t2. extends\n3. super\t4. this");
-        choice = sc.nextInt();
-
-        if(choice ==2){
-            score ++;
-        }
-        
-        System.out.println("3. What is the size of an int in Java?");
-        System.out.println("1. 2 bytes\t2. 4 bytes\n3. 8 bytes\t4. Depends on OS");
-        choice = sc.nextInt();
-
-        if(choice ==3){
-            score ++;
-        }
-        
-        System.out.println("4. Which of these is not a Java feature?");
-        System.out.println("1. Object-Oriented\t2. Platform-Independent\n3. Secure\t4. Pointer-Based");
-        choice = sc.nextInt();
-
-        if(choice ==1){
-            score ++;
-        }
-        
-        System.out.println("5. What is the default value of a boolean variable?");
-        System.out.println("1. true\t2. false\n3. 0\t4. null");
-        choice = sc.nextInt();
-        if(choice ==2){
-            score ++;
-        }
-        System.out.println("result:"+score);
-        
-    }
-
-    public static void OSQB() {
-        System.out.println("Choose the correct answer:");
-        System.out.println("1. Which of the following is a non-preemptive scheduling algorithm?");
-        System.out.println("1. SJF\t2. RR\n3. FCFS\t4. Priority");
-        int choice = sc.nextInt();
-
-        if(choice ==3){
-            score ++;
-        }
-        
-        System.out.println("2. What is a deadlock?");
-        System.out.println("1. Infinite Loop\t2. Resource Wait\n3. Circular Wait\t4. Thrashing");
-        choice = sc.nextInt();
-
-        if(choice ==3){
-            score ++;
-        }
-        
-        System.out.println("3. Which scheduling algorithm is used by most OS?");
-        System.out.println("1. FCFS\t2. Priority\n3. RR\t4. SJF");
-        choice = sc.nextInt();
-
-        if(choice ==3){
-            score ++;
-        }
-        
-        System.out.println("4. What is a virtual memory?");
-        System.out.println("1. Memory on disk\t2. RAM Extension\n3. None of these\t4. OS Feature");
-        choice = sc.nextInt();
-
-        if(choice ==2){
-            score ++;
-        }
-        
-        System.out.println("5. Which of the following is not an OS?");
-        System.out.println("1. Windows\t2. Linux\n3. Oracle\t4. MacOS");
-        choice = sc.nextInt();
-        if(choice ==3){
-            score ++;
-        }
-        System.out.println("result:"+score);
-        
-    }
-
 }
