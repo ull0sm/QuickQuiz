@@ -1,51 +1,78 @@
 import java.util.Scanner;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 class QuestionBank {
     static DataBase objdb = new DataBase();
     static Scanner sc = new Scanner(System.in);
-    static int score = 0;
-    public static void DSAQB() {
-        System.out.println("Choose the correct answer:");
-        System.out.println("1. What is the time complexity of binary search?");
-        System.out.println("1. O(n)\t2. O(log n)\n3. O(n^2)\t4. O(1)");
-        int choice = sc.nextInt();
-        if(choice ==1){
-            score ++;
-        }
-        System.out.println("result:"+score);
-        
-        System.out.println("2. Which data structure is used in Depth First Search (DFS)?");
-        System.out.println("1. Queue\t2. Stack\n3. Array\t4. Linked List");
-        choice = sc.nextInt();
-        if (choice == 2) { // Correct answer is Stack
-            score++;
-        }
-        System.out.println("Result: " + score);
+    private int score = 0;
+    private int questionIndex = 0;
 
-        System.out.println("3. What is the worst-case time complexity of QuickSort?");
-        System.out.println("1. O(n log n)\t2. O(log n)\n3. O(n^2)\t4. O(n)");
-        choice = sc.nextInt();
-        if (choice == 3) { // Correct answer is O(n^2)
-            score++;
-        }
-        System.out.println("Result: " + score);
+    private final String[] questions = {
+            "1. What is the time complexity of binary search?\n1. O(n)  2. O(log n)\n3. O(n^2)  4. O(1)",
+            "2. Which data structure is used in Depth First Search (DFS)?\n1. Queue  2. Stack\n3. Array  4. Linked List",
+            "3. What is the worst-case time complexity of QuickSort?\n1. O(n log n)  2. O(log n)\n3. O(n^2)  4. O(n)",
+            "4. What does the acronym SQL stand for?\n1. Structured Query Language  2. Simple Query Language\n3. System Query Language  4. Synchronized Query Language",
+            "5. Which sorting algorithm has the best average-case time complexity?\n1. Bubble Sort  2. Insertion Sort\n3. Merge Sort  4. Selection Sort"
+    };
 
-        System.out.println("4. What does the acronym SQL stand for?");
-        System.out.println("1. Structured Query Language\t2. Simple Query Language\n3. System Query Language\t4. Synchronized Query Language");
-        choice = sc.nextInt();
-        if (choice == 1) { // Correct answer is Structured Query Language
-            score++;
-        }
-        System.out.println("Result: " + score);
+    private final int[] answers = {2, 2, 3, 1, 3}; // Correct answers for each question
+    private JFrame frame;
+    private JLabel questionLabel;
+    private JButton[] optionButtons;
 
-        System.out.println("5. Which sorting algorithm has the best average-case time complexity?");
-        System.out.println("1. Bubble Sort\t2. Insertion Sort\n3. Merge Sort\t4. Selection Sort");
-        choice = sc.nextInt();
-        if (choice == 3) { // Correct answer is Merge Sort
+    public int DSAQB() {
+        initializeFrame();
+        return score; // Final score returned when the quiz ends
+    }
+
+    private void initializeFrame() {
+        frame = new JFrame("Quiz Application");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(500, 300);
+        frame.setLayout(new BorderLayout());
+
+        questionLabel = new JLabel("<html>" + questions[questionIndex].replace("\n", "<br>") + "</html>");
+        questionLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        questionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        frame.add(questionLabel, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        optionButtons = new JButton[4];
+        for (int i = 0; i < 4; i++) {
+            int choice = i + 1;
+            optionButtons[i] = new JButton("Option " + choice);
+            buttonPanel.add(optionButtons[i]);
+            optionButtons[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handleAnswer(choice);
+                }
+            });
+        }
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+
+        frame.setVisible(true);
+    }
+
+    private void handleAnswer(int choice) {
+        if (choice == answers[questionIndex]) {
             score++;
         }
-        System.out.println("Result: " + score);
-        
+
+        questionIndex++;
+
+        if (questionIndex < questions.length) {
+            questionLabel.setText("<html>" + questions[questionIndex].replace("\n", "<br>") + "</html>");
+        } else {
+            JOptionPane.showMessageDialog(frame, "Quiz Over! Your score: " + score);
+            frame.dispose();
+        }
     }
 
     public static void JAVAQB() {
