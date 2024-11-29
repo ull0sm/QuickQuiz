@@ -47,6 +47,7 @@ public class Login {
         panel.add(submitButton);
         frame.add(panel);
         frame.setVisible(true);
+        frame.setResizable(false);
 
         // Wait until the user selects a subject and closes the dialog
         while (selectedSubject[0] == null) {
