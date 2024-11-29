@@ -82,42 +82,49 @@ public class QuestionBank {
         questionLabel = new JLabel("<html>" + questions[questionIndex].replace("\n", "<br>") + "</html>");
         questionLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         questionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        frame.add(questionLabel, BorderLayout.CENTER);
+        frame.add(questionLabel, BorderLayout.NORTH);
 
         JPanel optionPanel = new JPanel(new GridLayout(4, 1, 10, 10)); // 4 rows for 4 options
         optionButtons = new JRadioButton[4];
         buttonGroup = new ButtonGroup();
 
         for (int i = 0; i < 4; i++) {
-            int choice = i + 1;
-            for (int j = 0; j < 4; j++) {
-                optionButtons[i] = new JRadioButton(options[i][j]);
-            }
+            optionButtons[i] = new JRadioButton(options[questionIndex][i]);
             buttonGroup.add(optionButtons[i]);
             optionPanel.add(optionButtons[i]);
-
-            optionButtons[i].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    handleAnswer(choice);
-                }
-            });
         }
-        frame.add(optionPanel, BorderLayout.SOUTH);
+        frame.add(optionPanel, BorderLayout.CENTER);
+
+        JButton nextButton = new JButton("Next");
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleAnswer();
+            }
+        });
+        frame.add(nextButton, BorderLayout.SOUTH);
 
         frame.setVisible(true);
     }
 
-    private void handleAnswer(int choice) {
-        if (choice == answers[questionIndex]) {
-            score++;
+    private void handleAnswer() {
+        for (int i = 0; i < 4; i++) {
+            if (optionButtons[i].isSelected()) {
+                if (i + 1 == answers[questionIndex]) {
+                    score++;
+                }
+                break;
+            }
         }
 
         questionIndex++;
 
         if (questionIndex < questions.length) {
             questionLabel.setText("<html>" + questions[questionIndex].replace("\n", "<br>") + "</html>");
-            buttonGroup.clearSelection();
+            for (int i = 0; i < 4; i++) {
+                optionButtons[i].setText(options[questionIndex][i]);
+                buttonGroup.clearSelection();
+            }
         } else {
             JOptionPane.showMessageDialog(frame, "Quiz Over! Your score: " + score);
             frame.dispose();
