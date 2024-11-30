@@ -25,8 +25,8 @@ A simple and interactive Java-based quiz system with a graphical user interface 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-repository/quiz-system
-cd quiz-system
+git clone https://github.com/ull0sm/QuickQuiz.git
+cd QuickQuiz
 ```
 
 ### 2. Compile the Code
