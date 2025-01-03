@@ -1,2 +1,5 @@
 *.class
-.gitignore
+*.gitignore
+bin
+*.exe
+log.txt
